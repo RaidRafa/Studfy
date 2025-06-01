@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Conexão com o banco MySQL
-require("dotenv").config();
+//require("dotenv").config();
 const mysql = require("mysql2");
 
 const db = mysql.createConnection({

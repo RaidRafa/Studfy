@@ -52,7 +52,9 @@ function login() {
         return;
       }
 
-      fetch("http://localhost:3000/login", {
+      const API_BASE = "https://Studfy.up.railway.app";
+
+      fetch(`${API_BASE}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

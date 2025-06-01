@@ -1,0 +1,103 @@
+/* Fundo da página */
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Formulário central */
+form {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Título */
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Container principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilo dos campos */
+.user,
+.password {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin: 15px;
+}
+
+.user i,
+.email i,
+.password i {
+  color: #667eea;
+  font-size: 1.3rem;
+  margin-right: 10px;
+}
+
+input[type="text"],
+input[type="password"] {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+  color: #333;
+}
+
+input::placeholder {
+  color: #999;
+}
+
+/* Botões */
+.buttons, a {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buttons button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Botão Cadastrar */
+.buttons button:first-child {
+  background-color: #667eea;
+  color: white;
+}
+
+.buttons button:first-child:hover {
+  background-color: #556cd6;
+}
+
+/* Botão Voltar */
+.buttons button:last-child {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.buttons button:last-child:hover {
+  background-color: #d5d5d5;
+}

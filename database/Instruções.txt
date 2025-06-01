@@ -1,0 +1,37 @@
+Instruções para rodar o projeto
+
+1) Gerar backup atualizado do banco de dados MySQL:
+
+Execute este comando no Prompt de Comando (CMD) para criar/atualizar o arquivo de backup do banco:
+
+"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe" -u root -p meubanco > "C:\Users\SeuUsuario\Downloads\Projeto html\database\backup_banco.sql"
+
+IMPORTANTE: Substitua "SeuUsuario" pelo nome do seu usuário no Windows.
+
+Será solicitado que você digite a senha do MySQL.
+
+Esse comando sobrescreve o arquivo backup_banco.sql com o estado atual do banco.
+
+---
+
+2) Rodar o servidor do projeto:
+
+No terminal, navegue até a pasta do projeto (exemplo: "Projeto html") e execute:
+
+node app.js
+
+Se tudo estiver correto, verá as mensagens:
+
+Conectado ao MySQL com sucesso!
+Servidor rodando em http://localhost:3000
+
+---
+
+3) Testar a aplicação:
+
+- Abra o navegador e acesse http://localhost:3000
+- Utilize as páginas HTML para cadastro, login e outras funcionalidades.
+
+---
+
+Dúvidas? Entre em contato com o responsável pelo projeto. Boa Sorte :)

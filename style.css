@@ -1,0 +1,140 @@
+* {
+    display: block;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    margin: 20px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 15px 20px;
+    background-color: #667eea;
+}
+
+header a{
+    margin: 5px 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
+}
+
+title {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    font-size: 40px;
+}
+
+a {
+    margin-left: 50px;
+    font-size: 20px;
+}
+
+header i {
+    margin-left: 950px;
+    font-size: 28px;
+    color: #333;
+    margin: 5px 10px;
+    cursor: pointer;
+}
+
+form.Matéria {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+form.Matéria label {
+  display: block;
+  font-weight: 600;
+  margin-top: 15px;
+  color: #333;
+}
+
+form.Matéria input,
+form.Matéria select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.bntConfirm {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #0d6efd;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bntConfirm:hover {
+  background-color: #084dc2;
+}
+
+
+@media (max-width: 600px) {
+  form.Matéria {
+    padding: 15px;
+    margin: 20px 10px;
+  }
+
+  form.Matéria input,
+  form.Matéria select {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  .bntConfirm {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
+.CRotina {
+    display: block;
+    margin: 40px auto;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header a, header i {
+        margin: 8px 0;
+    }
+
+    .CRotina {
+        width: 80%;
+    }
+}
+
+#Matéria {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}

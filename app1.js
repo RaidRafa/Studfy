@@ -121,7 +121,7 @@ app.post("/rotina", (req, res) => {
 });
 
 // Inicia o servidor
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT) || 3306;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

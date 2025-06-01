@@ -15,10 +15,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Conexão com o banco MySQL
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "28092004", 
-  database: "meubanco" 
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT
 });
 
 db.connect((err) => {
@@ -116,7 +117,7 @@ app.post("/rotina", (req, res) => {
 });
 
 // Inicia o servidor
-const PORT = process.env;PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

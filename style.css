@@ -138,3 +138,53 @@ form.Matéria select {
   flex-direction: column;
   gap: 10px;
 }
+
+.card-horizontal {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      margin: 10px auto;
+      width: 600px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-family: Arial, sans-serif;
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-info span {
+      margin: 3px 0;
+      font-size: 16px;
+    }
+
+    .btn-editar {
+      padding: 8px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-editar:hover {
+      background-color: #0056b3;
+    }
+
+    .fechar{
+      display: flex;
+      margin-left: 400px;
+      padding: 1px 8px;
+      background-color: red;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .fechar:hover{
+      transform: scale(1.1);
+      color: white;
+    }

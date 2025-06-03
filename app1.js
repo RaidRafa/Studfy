@@ -51,18 +51,20 @@ db.query(`
 
 db.query(`
   CREATE TABLE IF NOT EXISTS tarefa (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(255) NOT NULL,
-    descricao TEXT,
-    data_entrega DATE,
-    nota DECIMAL(5,2),
-    notificar BOOLEAN DEFAULT false,
-    rotina_id INT NOT NULL,
-    usuario_id INT NOT NULL,
-    FOREIGN KEY (rotina_id) REFERENCES rotina(id),
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
-  )
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(255),
+  descricao TEXT,
+  data_entrega DATE,
+  nota FLOAT,
+  notificar BOOLEAN,
+  rotina_id INT NOT NULL,
+  usuario_id INT NOT NULL,
+  FOREIGN KEY (rotina_id) REFERENCES rotina(id),
+  FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+);
 `);
+
+
 
 // Rota rotina
 app.post("/rotina", (req, res) => {
@@ -155,7 +157,7 @@ app.put("/rotina/:id", (req, res) => {
     return res.status(400).json({ mensagem: "Campos obrigatórios não preenchidos." });
   }
 
-  const query = `UPDATE rotina SE nome_materia = ?, dia = ?, where id = ?`;
+  const query = `UPDATE rotina SET nome_materia = ?, dia = ? WHERE id = ?`;
   db.query(query, [nome_materia, dia, id], (err, result) => {
     if(err){
       console.error("Erro ao atualizar rotina:", err.message);
@@ -188,7 +190,7 @@ app.get("/tarefas", (req, res) => {
   });
 });
 
-app.post("/tarefas", (req, res) => {
+app.post("/tarefa", (req, res) => {
   const { titulo, descricao, data_entrega, nota, notificar, rotina_id, usuario_id } = req.body;
 
   if (!titulo || !rotina_id || !usuario_id) {
@@ -197,7 +199,8 @@ app.post("/tarefas", (req, res) => {
 
   const query = `
     INSERT INTO tarefa (titulo, descricao, data_entrega, nota, notificar, rotina_id, usuario_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
 
   db.query(query, [titulo, descricao, data_entrega, nota, notificar, rotina_id, usuario_id], (err, result) => {
     if (err) {

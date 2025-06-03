@@ -178,7 +178,7 @@ function criarMatéria() {
               <span class="dia">${rotina}</span>
             </div>
             <i class="bi bi-pencil-fill btn-edit" style="cursor: pointer;"></i>
-            <i class="bi bi-trash-fill btn-delete" style="cursor: pointer; margin-left: -415px;"></i>
+            <i class="bi bi-trash-fill btn-delete" id="btnEdit" style="cursor: pointer; margin-left: -415px; background-color:rgb(160, 48, 48);"></i>
           `;
           container.appendChild(novoCard);
 
@@ -233,50 +233,54 @@ function carregarRotinas() {
   const container = document.getElementById("cardsContainer");
   const usuario_id = localStorage.getItem("usuarioId");
 
+  if (!container) return;
   if (!usuario_id) {
     console.error("Usuário não autenticado.");
     return;
   }
 
   fetch(`http://localhost:3000/rotina?usuario_id=${usuario_id}`)
-    .then(res => res.json())
-    .then(rotinas => {
-      container.innerHTML = ""; // limpa antes de carregar
+  .then(res => res.json())
+  .then(rotinas => {
+    container.innerHTML = "";
 
-      rotinas.forEach(rotina => {
-        const novoCard = document.createElement("div");
-        novoCard.className = "card-horizontal";
-        novoCard.dataset.id = rotina.id;
-        novoCard.innerHTML = `
-          <div class="card-info">
-            <span class="nome"><strong>${rotina.nome_materia}</strong></span>
-            <span class="dia">${rotina.dia}</span>
-          </div>
-          <i class="bi bi-pencil-fill btn-edit" style="cursor: pointer;"></i>
-          <i class="bi bi-trash-fill btn-delete" style="cursor: pointer; margin-left: -415px;"></i>
-        `;
+    rotinas.forEach(rotina => {
+      const novoCard = document.createElement("div");
+      novoCard.className = "card-horizontal";
+      novoCard.dataset.id = rotina.id;
+      novoCard.innerHTML = `
+        <div class="card-info">
+          <span class="nome"><strong>${rotina.nome_materia}</strong></span>
+          <span class="dia">${rotina.dia}</span>
+        </div>
+        <i class="bi bi-pencil-fill btn-edit" style="cursor: pointer;"></i>
+        <i class="bi bi-trash-fill btn-delete" style="cursor: pointer; margin-left: -415px;"></i>
+      `;
 
-        container.appendChild(novoCard);
+      // Clicar fora dos ícones redireciona para Tarefas
+      novoCard.addEventListener("click", (event) => {
+        const isEditIcon = event.target.classList.contains("btn-edit");
+        const isDeleteIcon = event.target.classList.contains("btn-delete");
+
+        if (!isEditIcon && !isDeleteIcon) {
+          localStorage.setItem("rotinaId", rotina.id);
+          localStorage.setItem("nomeMateria", rotina.nome_materia);
+          window.location.href = "Tarefas.html";
+        }
       });
-      deletarMateria();
 
-      editarMateria(); // ativa eventos nos ícones
-    })
-    .catch(err => {
-      console.error("Erro ao carregar rotinas:", err);
+      container.appendChild(novoCard);
     });
 
-    document.querySelectorAll(".card-horizontal").forEach(card => {
-    card.addEventListener("click", () => {
-    const idRotina = card.dataset.id;
-    const nomeMateria = card.querySelector(".nome").textContent;
-    
-    localStorage.setItem("rotinaId", idRotina);
-    localStorage.setItem("nomeMateria", nomeMateria);
-    window.location.href = "tarefas.html";
+    deletarMateria();
+    editarMateria();
+  })
+  .catch(err => {
+    console.error("Erro ao carregar rotinas:", err);
   });
-});
 }
+
+
 
 function deletarMateria() {
   const botoesDeletar = document.querySelectorAll(".btn-delete");
@@ -310,49 +314,142 @@ function deletarMateria() {
 }
 
 function adicionarTarefa() {
-  const form = document.getElementById("formTarefa");
-  if (!form) return;
+  const btnform = document.getElementById("bntEnviarTarefa");
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  if (btnform) {
+    btnform.addEventListener("click", function (event) {
+      event.preventDefault();
 
-    const rotina_id = localStorage.getItem("rotinaId");
-    const usuario_id = localStorage.getItem("usuarioId");
+      const tituloTarefa = document.getElementById("nomeTarefa").value.trim();
+      const descricaoTarefa = document.getElementById("descriçãoTarefa").value.trim();
+      const dataEntrega = document.getElementById("dataEntrega").value;
+      const nota = parseFloat(document.getElementById("nota").value) || 0;
+      const notificacao = document.getElementById("notificação").checked;
 
-    const titulo = document.getElementById("tituloTarefa").value.trim();
-    const descricao = document.getElementById("descricaoTarefa").value.trim();
-    const data_entrega = document.getElementById("dataEntrega").value;
-    const nota = parseFloat(document.getElementById("notaTarefa").value) || 0;
-    const notificar = document.getElementById("notificar").checked;
+      const usuario_id = localStorage.getItem("usuarioId");
+      const rotina_id = localStorage.getItem("rotinaId");
+      const nomeMateria = localStorage.getItem("nomeMateria");
 
-    fetch("http://localhost:3000/tarefas", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        titulo,
-        descricao,
-        data_entrega,
-        nota,
-        notificar,
-        rotina_id,
-        usuario_id
+      if (!tituloTarefa || !dataEntrega || !usuario_id || !rotina_id) {
+        alert("Preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      fetch("http://localhost:3000/tarefa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          titulo: tituloTarefa,
+          nome_materia: nomeMateria,
+          descricao: descricaoTarefa,
+          data_entrega: dataEntrega,
+          nota: nota,
+          notificar: notificacao,
+          rotina_id: rotina_id,
+          usuario_id: usuario_id
+        })
       })
-    })
-    .then(res => res.json())
-    .then(() => {
-      form.reset();
-      carregarTarefas(); // recarrega a lista
+        .then(res => res.json())
+        .then(data => {
+          alert("Tarefa registrada com sucesso!");
+          console.log("Tarefa adicionada:", data);
+          
+
+          const novoCard = document.createElement("div");
+            novoCard.className = "tarefa-card";
+            novoCard.dataset.id = data.id;
+
+            novoCard.innerHTML = `
+              <div class="info-card">
+                <div>
+                  <span><strong>${tituloTarefa}</strong></span><br>
+                  <span><em>${descricaoTarefa}</em></span><br>
+                  <span>Data de entrega: ${dataEntrega}</span><br>
+                  <span>Nota: ${nota}</span><br>
+                  <span>Notificar: ${notificacao ? "Sim" : "Não"}</span>
+                </div>
+              </div>
+            `;
+
+            document.getElementById("tarefasContainer").appendChild(novoCard);
+
+          const form = document.getElementById("formTarefa");
+          form.style.display = "none";
+
+          if (typeof carregarTarefas === "function") {
+            carregarTarefas(); // atualiza lista se a função existir
+          }
+        })
     });
-  });
+  }
 }
 
 
+function criarTarefa(){
+  const btnCriarTarefa = document.getElementById("criarTarefa");
+  if(btnCriarTarefa) {
+    btnCriarTarefa.addEventListener("click", function() {
+      const form = document.getElementById("formTarefa");
+      form.style.display = "flex";
+    });
+  }
+}
+
+function fecharCardTarefa(){
+  const btnFecharCard = document.getElementById("btnFecharCard");
+  if(btnFecharCard){
+    btnFecharCard.addEventListener("click", function() {
+      const form = document.getElementById("formTarefa");
+      form.style.display = "none";
+    });
+  }
+}
+
+function carregarTarefas() {
+  const container = document.getElementById("tarefasContainer");
+  const rotina_id = localStorage.getItem("rotinaId");
+
+  if (!container || !rotina_id) return;
+
+  fetch(`http://localhost:3000/tarefas?rotina_id=${rotina_id}`)
+    .then(res => res.json())
+    .then(tarefas => {
+      container.innerHTML = "";
+
+      tarefas.forEach(tarefa => {
+        const li = document.createElement("div");
+        li.classList.add("card-tarefa")
+        li.innerHTML = `
+          <strong>${tarefa.titulo}</strong><br>
+          ${tarefa.descricao ? `<em>${tarefa.descricao}</em><br>` : ""}
+          Data de entrega: ${tarefa.data_entrega}<br>
+          Nota: ${tarefa.nota ?? "-"}<br>
+          Notificar: ${tarefa.notificar ? "Sim" : "Não"}
+          <hr>
+        `;
+        container.appendChild(li);
+      });
+    })
+    .catch(err => {
+      console.error("Erro ao carregar tarefas:", err);
+    });
+}
+
+if (window.location.pathname.includes("Tarefas.html")) {
+  carregarTarefas();
+}
+
+
+
 // Inicializar funções
+fecharCardTarefa();
+criarTarefa();
 deletarMateria();
 carregarRotinas();
 editarMateria();
 closeCardMateria();
 criarMatéria();
+adicionarTarefa();
 login();
 cadastrar();
 criarRotina();

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
     display: block;
     align-items: center;
@@ -9,18 +11,19 @@
 header {
     display: flex;
     margin: 20px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     padding: 15px 20px;
-    background-color: #667eea;
+    background-color: rgb(48, 47, 47);
+    width: 200vh;
 }
 
-header a{
-    margin: 5px 10px;
-    font-size: 18px;
-    text-decoration: none;
-    color: black;
+header h1{
+  display: flex;
+  font-size: 60px;
+  color: #556cd6;
+  font-family: "Inter", sans-serif;
 }
 
 title {
@@ -28,6 +31,12 @@ title {
     justify-content: center;
     padding: 20px;
     font-size: 40px;
+    background-color: #333;
+
+}
+
+body{
+  background-color: rgb(51, 50, 50);
 }
 
 a {
@@ -150,7 +159,13 @@ form.Matéria select {
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       font-family: Arial, sans-serif;
+      cursor: pointer;
     }
+
+
+.card-horizontal:hover{
+  transform: scale(1.1);
+}
 
     .card-info {
       display: flex;

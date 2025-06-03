@@ -80,3 +80,18 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-06-01 14:34:32
+
+CREATE TABLE `tarefa` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `titulo` VARCHAR(255),
+  `descricao` TEXT,
+  `data_entrega` DATE,
+  `nota` FLOAT,
+  `notificar` BOOLEAN,
+  `rotina_id` INT,
+  `usuario_id` INT,
+  `nome_materia` INT,
+  FOREIGN KEY (nome_materia) REFERENCES rotina(nome_materia),
+  FOREIGN KEY (rotina_id) REFERENCES rotina(id),
+  FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+);
